@@ -1,39 +1,48 @@
 package chowdeswari.com;
+
+import java.util.Arrays;
 import java.util.Scanner;
 
-public class LinearSearchExample {
+public class BinarySearchExample {
 
-    // Linear Search Method
-    public static int linearSearch(int[] array, int target) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == target) {
-                return i; // Target found at index i
+    
+    public static int binarySearch(int[] array, int target) {
+        int left = 0;
+        int right = array.length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (array[mid] == target) {
+                return mid; 
+            }
+
+            if (array[mid] < target) {
+                left = mid + 1; 
+            } else {
+                right = mid - 1; 
             }
         }
-        return -1; // Target not found
+
+        return -1; 
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Input array size and elements
         System.out.print("Enter number of elements: ");
         int n = scanner.nextInt();
 
         int[] array = new int[n];
-        System.out.println("Enter " + n + " elements:");
+        System.out.println("Enter " + n + " sorted elements:");
         for (int i = 0; i < n; i++) {
             array[i] = scanner.nextInt();
         }
 
-        // Input the target element to search for
         System.out.print("Enter the element to search: ");
         int target = scanner.nextInt();
+        int result = binarySearch(array, target);
 
-        // Perform linear search
-        int result = linearSearch(array, target);
-
-        // Output the result
         if (result == -1) {
             System.out.println("Element not found in the array.");
         } else {

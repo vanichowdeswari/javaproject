@@ -1,15 +1,31 @@
 package chowdeswari.com;
+
 import java.util.Scanner;
 
-public class LinearSearchExample {
+public class JumpSearchExample {
 
-    // Linear Search Method
-    public static int linearSearch(int[] array, int target) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == target) {
-                return i; // Target found at index i
+    // Jump Search Method
+    public static int jumpSearch(int[] arr, int target) {
+        int n = arr.length;
+        int step = (int) Math.floor(Math.sqrt(n));
+        int prev = 0;
+
+        // Finding the block where element may be present
+        while (arr[Math.min(step, n) - 1] < target) {
+            prev = step;
+            step += (int) Math.floor(Math.sqrt(n));
+            if (prev >= n) {
+                return -1; // Target not found
             }
         }
+
+        // Linear search within the block
+        for (int i = prev; i < Math.min(step, n); i++) {
+            if (arr[i] == target) {
+                return i; // Target found
+            }
+        }
+
         return -1; // Target not found
     }
 
@@ -21,7 +37,7 @@ public class LinearSearchExample {
         int n = scanner.nextInt();
 
         int[] array = new int[n];
-        System.out.println("Enter " + n + " elements:");
+        System.out.println("Enter " + n + " sorted elements:");
         for (int i = 0; i < n; i++) {
             array[i] = scanner.nextInt();
         }
@@ -30,8 +46,8 @@ public class LinearSearchExample {
         System.out.print("Enter the element to search: ");
         int target = scanner.nextInt();
 
-        // Perform linear search
-        int result = linearSearch(array, target);
+        // Perform jump search
+        int result = jumpSearch(array, target);
 
         // Output the result
         if (result == -1) {
